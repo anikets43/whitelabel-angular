@@ -1,4 +1,4 @@
-import { CartItem } from "app/models/cart-item.model";
+import { CartItem } from './cart-item.model';
 
 export class ShoppingCart {
   public items: CartItem[] = new Array<CartItem>();

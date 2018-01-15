@@ -1,4 +1,4 @@
-import { Injector, NgModule } from '@angular/core';
+import { Injector, NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,16 +16,26 @@ import { ShoppingCartService } from './services/shopping-cart.service';
 import { LocalStorageServie, StorageService } from './services/storage.service';
 import { FooterComponent } from './shared/layout/footer/footer.component';
 import { HeaderComponent } from './shared/layout/header/header.component';
+import { AppSessionService } from './shared/session/app-session.service';
+
+import * as $ from 'jquery';
 
 export function appInitializerFactory(injector: Injector) {
   return () => {
 
     return new Promise<boolean>((resolve, reject) => {
-      // Load app.config
-
+      let appSessionService: AppSessionService = injector.get(AppSessionService);
+      appSessionService.init().then((data: any) => {
+        // Checks whether tenant is whitelabelled
+        if (appSessionService.isWhiteLabelInstance) {
+          $('head').append('<link id="TenantCustomCss"  href="' + './assets/css/' + data.externalCSS + '" rel="stylesheet"/>');
+        }
+        resolve(true);
+      });
     });
   };
 }
+
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -45,6 +55,13 @@ export function appInitializerFactory(injector: Injector) {
     AppRoutingModule
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appInitializerFactory,
+      deps: [Injector],
+      multi: true
+    },
+    AppSessionService,
     ProductsDataService,
     DeliveryOptionsDataService,
     PopulatedCartRouteGuard,

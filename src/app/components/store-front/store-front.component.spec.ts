@@ -1,29 +1,29 @@
-import { async, inject, TestBed } from "@angular/core/testing";
-import { HttpModule } from "@angular/http";
-import { CartItem } from "app/models/cart-item.model";
-import { Product } from "app/models/product.model";
-import { ShoppingCart } from "app/models/shopping-cart.model";
-import { DeliveryOptionsDataService } from "app/services/delivery-options.service";
-import { ProductsDataService } from "app/services/products.service";
-import { ShoppingCartService } from "app/services/shopping-cart.service";
-import { LocalStorageServie, StorageService } from "app/services/storage.service";
-import { Observable } from "rxjs/Observable";
-import { Observer } from "rxjs/Observer";
-import * as sinon from "sinon";
-import { ShoppingCartComponent } from "../shopping-cart/shopping-cart.component";
-import { StoreFrontComponent } from "./store-front.component";
+import { async, inject, TestBed } from '@angular/core/testing';
+import { HttpModule } from '@angular/http';
+import { CartItem } from '../../models/cart-item.model';
+import { Product } from '../../models/product.model';
+import { ShoppingCart } from '../../models/shopping-cart.model';
+import { DeliveryOptionsDataService } from '../../services/delivery-options.service';
+import { ProductsDataService } from '../../services/products.service';
+import { ShoppingCartService } from '../../services/shopping-cart.service';
+import { LocalStorageServie, StorageService } from '../../services/storage.service';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
+import * as sinon from 'sinon';
+import { ShoppingCartComponent } from '../shopping-cart/shopping-cart.component';
+import { StoreFrontComponent } from './store-front.component';
 
 const PRODUCT_1 = new Product();
-PRODUCT_1.name = "Product 1";
-PRODUCT_1.id = "1";
+PRODUCT_1.name = 'Product 1';
+PRODUCT_1.id = '1';
 PRODUCT_1.price = 1;
-PRODUCT_1.description = "desc1";
+PRODUCT_1.description = 'desc1';
 
 const PRODUCT_2 = new Product();
-PRODUCT_2.name = "Product 2";
-PRODUCT_2.id = "2";
+PRODUCT_2.name = 'Product 2';
+PRODUCT_2.id = '2';
 PRODUCT_2.price = 2;
-PRODUCT_2.description = "desc2";
+PRODUCT_2.description = 'desc2';
 
 // tslint:disable-next-line:max-classes-per-file
 class MockProductDataService extends ProductsDataService {
@@ -67,7 +67,7 @@ class MockShoppingCartService {
   }
 }
 
-describe("StoreFrontComponent", () => {
+describe('StoreFrontComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -86,62 +86,62 @@ describe("StoreFrontComponent", () => {
     }).compileComponents();
   }));
 
-  it("should create the component", async(() => {
+  it('should create the component', async(() => {
     const fixture = TestBed.createComponent(StoreFrontComponent);
     const component = fixture.debugElement.componentInstance;
     expect(component).toBeTruthy();
   }));
 
-  it("should display all the products", async(() => {
+  it('should display all the products', async(() => {
     const fixture = TestBed.createComponent(StoreFrontComponent);
     fixture.detectChanges();
 
     const component = fixture.debugElement.componentInstance;
     const compiled = fixture.debugElement.nativeElement;
-    const productElements = compiled.querySelectorAll(".product-container");
+    const productElements = compiled.querySelectorAll('.product-container');
     expect(productElements.length).toEqual(2);
 
-    expect(productElements[0].querySelector(".js-product-name").textContent).toEqual(PRODUCT_1.name);
-    expect(productElements[0].querySelector(".js-product-price").textContent).toContain(PRODUCT_1.price);
-    expect(productElements[0].querySelector(".js-product-desc").textContent).toContain(PRODUCT_1.description);
+    expect(productElements[0].querySelector('.js-product-name').textContent).toEqual(PRODUCT_1.name);
+    expect(productElements[0].querySelector('.js-product-price').textContent).toContain(PRODUCT_1.price);
+    expect(productElements[0].querySelector('.js-product-desc').textContent).toContain(PRODUCT_1.description);
 
-    expect(productElements[1].querySelector(".js-product-name").textContent).toEqual(PRODUCT_2.name);
-    expect(productElements[1].querySelector(".js-product-price").textContent).toContain(PRODUCT_2.price);
-    expect(productElements[1].querySelector(".js-product-desc").textContent).toContain(PRODUCT_2.description);
+    expect(productElements[1].querySelector('.js-product-name').textContent).toEqual(PRODUCT_2.name);
+    expect(productElements[1].querySelector('.js-product-price').textContent).toContain(PRODUCT_2.price);
+    expect(productElements[1].querySelector('.js-product-desc').textContent).toContain(PRODUCT_2.description);
   }));
 
-  it("should not display the remove item button when the item is not in the cart", async(() => {
+  it('should not display the remove item button when the item is not in the cart', async(() => {
     const fixture = TestBed.createComponent(StoreFrontComponent);
     fixture.detectChanges();
 
     const component = fixture.debugElement.componentInstance;
     const compiled = fixture.debugElement.nativeElement;
-    const productElements = compiled.querySelectorAll(".product-container");
+    const productElements = compiled.querySelectorAll('.product-container');
     expect(productElements.length).toEqual(2);
 
-    expect(productElements[0].querySelector(".js-product-name").textContent).toEqual(PRODUCT_1.name);
-    expect(productElements[0].querySelector(".js-product-price").textContent).toContain(PRODUCT_1.price);
-    expect(productElements[0].querySelector(".js-product-desc").textContent).toContain(PRODUCT_1.description);
-    expect(productElements[0].querySelectorAll(".js-btn-remove").length).toEqual(0);
+    expect(productElements[0].querySelector('.js-product-name').textContent).toEqual(PRODUCT_1.name);
+    expect(productElements[0].querySelector('.js-product-price').textContent).toContain(PRODUCT_1.price);
+    expect(productElements[0].querySelector('.js-product-desc').textContent).toContain(PRODUCT_1.description);
+    expect(productElements[0].querySelectorAll('.js-btn-remove').length).toEqual(0);
   }));
 
-  it("should add the product to the cart when add item button is clicked",
+  it('should add the product to the cart when add item button is clicked',
      async(inject([ShoppingCartService], (service: MockShoppingCartService) => {
     const fixture = TestBed.createComponent(StoreFrontComponent);
     fixture.detectChanges();
 
-    const addItemSpy = sinon.spy(service, "addItem");
+    const addItemSpy = sinon.spy(service, 'addItem');
 
     const component = fixture.debugElement.componentInstance;
     const compiled = fixture.debugElement.nativeElement;
-    const productElements = compiled.querySelectorAll(".product-container");
+    const productElements = compiled.querySelectorAll('.product-container');
 
-    productElements[0].querySelector(".js-btn-add").click();
+    productElements[0].querySelector('.js-btn-add').click();
     sinon.assert.calledOnce(addItemSpy);
     sinon.assert.calledWithExactly(addItemSpy, PRODUCT_1, 1);
   })));
 
-  it("should remove the product from the cart when remove item button is clicked",
+  it('should remove the product from the cart when remove item button is clicked',
      async(inject([ShoppingCartService], (service: MockShoppingCartService) => {
     const newCart = new ShoppingCart();
     const cartItem = new CartItem();
@@ -153,13 +153,13 @@ describe("StoreFrontComponent", () => {
     const fixture = TestBed.createComponent(StoreFrontComponent);
     fixture.detectChanges();
 
-    const addItemSpy = sinon.spy(service, "addItem");
+    const addItemSpy = sinon.spy(service, 'addItem');
 
     const component = fixture.debugElement.componentInstance;
     const compiled = fixture.debugElement.nativeElement;
-    const productElements = compiled.querySelectorAll(".product-container");
+    const productElements = compiled.querySelectorAll('.product-container');
 
-    productElements[0].querySelector(".js-btn-remove").click();
+    productElements[0].querySelector('.js-btn-remove').click();
     sinon.assert.calledOnce(addItemSpy);
     sinon.assert.calledWithExactly(addItemSpy, PRODUCT_1, -1);
   })));

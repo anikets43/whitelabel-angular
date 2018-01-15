@@ -1,18 +1,16 @@
 {
-  "data": [
-    {
-      "id": 1,
-      "name": "User 1",
-      "userName": "user1",
-      "resource": {
-        "primary-color": "",
-        "secondary-color": "",
-        "font": "",
-        "logo": "",
-        "blog": "",
-        "externalCSS": "",
-        "banner": ""
-      }
+  "data": {
+    "id": 1,
+    "name": "Chrome Marketplace",
+    "userName": "user1",
+    "externalCSS": "tenant1.css",
+    "icon": "../../assets/icons/chrome.png",
+    "isWhiteLabelInstance": true,
+    "blogUrl": "https://www.blogger.com/blogger.g?blogID=5261436164465310257#allposts",
+    "banner": "https://cdn.shopify.com/s/files/1/0712/4089/collections/Coca-Cola_Banner.jpg?v=1484111982",
+    "tenant": {
+      "tenantId": 1,
+      "tenantName": "Company1"
     }
-  ]
+  }
 }

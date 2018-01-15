@@ -39,3 +39,19 @@ p {
     }
   }
 }
+
+html, body {
+  height: 100%;
+}
+.page-wrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -102px;
+}
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+.social-footer, .page-wrap:after {
+  height: 102px;
+}

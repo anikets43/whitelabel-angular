@@ -1,0 +1,12 @@
+.top-bar{
+  background-color: #000000;
+}
+
+html body {
+  font-family: serif;
+  font-size: 1em;
+}
+
+.button.success{
+  background-color: #3adb76;
+}
