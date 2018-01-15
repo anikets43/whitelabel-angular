@@ -45,4 +45,4 @@ Then navigate to http://localhost:4200/
 }
 ```
 
-* Custom CSS: CSS styles like font, color, button styles, footer, etc can be customized into tenant specific file residing inside ~~src\assets\css~~
+* Custom CSS: CSS styles like font, color, button styles, footer, etc can be customized into tenant specific file residing inside src\assets\css\{tenant}.css
